@@ -1,0 +1,14 @@
+{
+  "name": "balita",
+  "version": "0.0.1",
+  "description": "Read Philippine news right in your terminal.",
+  "keywords": ["balita", "rss", "philippines", "filipino", "philippine", "news", "cli"],
+  "dependencies": {
+    "html-entities": "^1.1.2",
+    "inquirer": "^0.8.0",
+    "lodash": "^3.3.1",
+    "node-readability": "^1.0.1",
+    "sanitize-html": "^1.6.1",
+    "xml2json": "^0.6.1"
+  }
+}
