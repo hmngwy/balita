@@ -16,7 +16,7 @@ var insertLines = function insertLines( a ) {
   var res = "";
   for ( var i = 0; i < a_split.length; i++ ) {
     res += a_split[i] + " ";
-    if ( (i+1) % 12 === 0 )
+    if ( (i+1) % 10 === 0 )
       res += "[break]";
     }
   return res;
