@@ -2,7 +2,15 @@
   "name": "balita",
   "version": "0.0.1",
   "description": "Read Philippine news right in your terminal.",
-  "keywords": ["balita", "rss", "philippines", "filipino", "philippine", "news", "cli"],
+  "keywords": [
+    "balita",
+    "rss",
+    "philippines",
+    "filipino",
+    "philippine",
+    "news",
+    "cli"
+  ],
   "dependencies": {
     "html-entities": "^1.1.2",
     "inquirer": "^0.8.0",
@@ -10,5 +18,24 @@
     "node-readability": "^1.0.1",
     "sanitize-html": "^1.6.1",
     "xml2json": "^0.6.1"
-  }
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": "true",
+  "bin": {
+    "balite" : "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hmngwy/balita.git"
+  },
+  "author": "hmngwy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hmngwy/balita/issues"
+  },
+  "homepage": "https://github.com/hmngwy/balita"
 }

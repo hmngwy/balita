@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 var read = require('node-readability'),
   sanitize = require('sanitize-html'),
   _ = require('lodash'),
