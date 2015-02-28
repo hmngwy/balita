@@ -23,4 +23,9 @@ I just woke up one morning (today, Saturday, February 28) and thought, I want to
 I uh, well do you want to write it? Fork and send me a PR. I really didn't plan to spend a lot of time on this tiny project, so there's no tests and all that jazz. :)
 
 ### What's the news source?
-It's just Google News with the "Philippines" filter on. 
+It's just Google News RSS with the "Philippines" filter on. The full articles are loaded via the news sites themselves.
+
+### How it works
+The RSS is stripped for titles and links and that's your main menu. 
+
+The full articles are loaded directly from the news sites, the whole page is loaded and is passed through node-readability, this finds the article in the page. I apply some cleanup myself like condensing the paragraph spacing, indentations, and line lengths by word. 
