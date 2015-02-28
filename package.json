@@ -1,6 +1,6 @@
 {
   "name": "balita",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Read Philippine news right in your terminal.",
   "keywords": [
     "balita",
@@ -17,7 +17,7 @@
     "lodash": "^3.3.1",
     "node-readability": "^1.0.1",
     "sanitize-html": "^1.6.1",
-    "xml2json": "^0.6.1"
+    "xml2js": "^0.4.5"
   },
   "main": "index.js",
   "devDependencies": {},
@@ -26,7 +26,7 @@
   },
   "preferGlobal": "true",
   "bin": {
-    "balite" : "index.js"
+    "balite": "index.js"
   },
   "repository": {
     "type": "git",

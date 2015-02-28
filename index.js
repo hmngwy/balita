@@ -4,7 +4,7 @@ var read = require('node-readability'),
   sanitize = require('sanitize-html'),
   _ = require('lodash'),
   http = require('http'),
-  parser = require('xml2json'),
+  parser = require('xml2js').parseString,
   inquirer = require('inquirer'),
   entities = require('html-entities').AllHtmlEntities;
 
@@ -62,37 +62,35 @@ http.get(url, function(res) {
   });
 
   res.on('end', function() {
-    var json = parser.toJson(body); //returns a string containing the JSON structure by default
-    var response = JSON.parse(json);
+    parser(body, function(err, json){
 
-    var urlmap = {};
+      var urlmap = {};
 
-    // _.each(response.rss.channel.item, function(i){ urlmap[entities.decode( i.title.trim() )] = i.link; });
-    // console.log(urlmap);
+      var choices = _.map(json.rss.channel[0].item, function(i){
+        var name = i.title.toString();
+        var link = i.link.toString();
+        return {
+          name: entities.decode( name.trim() ),
+          value: link.substring(link.indexOf("url=")+4, link.length)
+        }
+      });
+      choices.push(new inquirer.Separator());
+      inquirer.prompt([
+        {
+          type      : "list",
+          name      : "link",
+          message   : "Balita",
+          paginated : true,
+          choices   : choices
+        }
+      ], function( answers ) {
 
-    var choices = _.map(response.rss.channel.item, function(i){
-      return {
-        name: entities.decode( i.title.trim() ),
-        value: i.link.substring(i.link.indexOf("url=")+4, i.link.length)
-      }
+        console.log( "  Loading: "+answers.link );
+
+        readArticle(answers.link);
+
+      });
     });
-    choices.push(new inquirer.Separator());
-    inquirer.prompt([
-      {
-        type      : "list",
-        name      : "link",
-        message   : "Balita",
-        paginated : true,
-        choices   : choices
-      }
-    ], function( answers ) {
-
-      console.log( "  Loading: "+answers.link );
-
-      readArticle(answers.link);
-
-    });
-
   });
 }).on('error', function(e) {
   console.log("Got error: ", e);
