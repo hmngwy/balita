@@ -3,7 +3,7 @@
 var read = require('node-readability'),
   sanitize = require('sanitize-html'),
   _ = require('lodash'),
-  http = require('http'),
+  http = require('https'),
   parser = require('xml2js').parseString,
   inquirer = require('inquirer'),
   entities = require('html-entities').AllHtmlEntities;
@@ -22,7 +22,7 @@ var insertLines = function insertLines( a ) {
   return res;
 }
 
-var url = 'http://news.google.com.ph/news?pz=1&cf=all&ned=en_ph&hl=en&topic=n&output=rss';
+var url = 'https://news.google.com.ph/news?cf=all&hl=en&pz=1&ned=en_ph&topic=n&output=rss';
 
 var readArticle = function readArticle( url ) {
   read( url, function(err, article, meta) {
@@ -67,6 +67,7 @@ http.get(url, function(res) {
       var urlmap = {};
 
       var choices = _.map(json.rss.channel[0].item, function(i){
+
         var name = i.title.toString();
         var link = i.link.toString();
         return {
