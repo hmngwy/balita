@@ -17,6 +17,8 @@
     "lodash": "^3.3.1",
     "node-readability": "^1.0.1",
     "sanitize-html": "^1.6.1",
+    "window-size": "^0.2.0",
+    "wordwrap": "^1.0.0",
     "xml2js": "^0.4.5"
   },
   "main": "index.js",

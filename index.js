@@ -6,28 +6,19 @@ var read = require('node-readability'),
   http = require('https'),
   parser = require('xml2js').parseString,
   inquirer = require('inquirer'),
+  size = require('window-size'),
+  wrap = require('wordwrap')(55),
   entities = require('html-entities').AllHtmlEntities;
 
 var entities = new entities();
 var ARTICLE_INDENT = "    ";
-
-var insertLines = function insertLines( a ) {
-  var a_split = a.split(" ");
-  var res = "";
-  for ( var i = 0; i < a_split.length; i++ ) {
-    res += a_split[i] + " ";
-    if ( (i+1) % 10 === 0 )
-      res += "[break]";
-    }
-  return res;
-}
 
 var url = 'https://news.google.com.ph/news?cf=all&hl=en&pz=1&ned=en_ph&topic=n&output=rss';
 
 var readArticle = function readArticle( url ) {
   read( url, function(err, article, meta) {
 
-    console.log( "\n" + ARTICLE_INDENT + article.title.toUpperCase(), "\n" );
+    console.log( "\n" + ARTICLE_INDENT + article.title.toUpperCase().trim(), "\n" );
 
     // make sure we have linebreaks on paragraphs, in case html minified
     var content = article.content.replace( /\<\/p\>/g, "\n" );
@@ -35,18 +26,24 @@ var readArticle = function readArticle( url ) {
     // strip unwanted tags
     content = sanitize( content, { allowedTags: [ ] } );
 
-    // condense whitespace, explode by paragraph
-    content = content.split( '\n' ).filter( function( str ) { return /\S/.test( str ); });
+    // hard wrap
+    content = wrap( content );
 
-    // trim lines, linebreak every 12 words
-    content = _.map(content, function( i ){ return insertLines( i.trim() ).replace( /\[break\]/g, "\n" + ARTICLE_INDENT ) });
+
+    // condense whitespace, explode by paragraph
+    content = content.split( '\n' ); //.filter( function( str ) { return /\S/.test( str ); });
+
+    // trim lines
+    content = _.map(content, function( i ){ return i.trim(); });
 
     // implode, double linebreak to visually separate paragraphs
-    content = content.join( "\n\n" + ARTICLE_INDENT );
+    content = content.join( "\n" );
+    content = content.replace(/\n{3,}/g, '\n\n');
+    content = content.replace(/\n/g, '\n'+ARTICLE_INDENT);
 
     // decode html entities
     content = entities.decode( content );
-    console.log( ARTICLE_INDENT + content + "\n" );
+    console.log( content );
 
     article.close();
   });
