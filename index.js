@@ -46,7 +46,7 @@ var readArticle = function readArticle( url ) {
       content = content.replace(/\n/g, '\n'+ARTICLE_INDENT);
 
       // decode html entities
-      content = entities.decode( content );
+      content = entities.decode( content ).trimRight();
       content = content.split('\n');
       content.push('END');
 
@@ -71,12 +71,12 @@ function more(content, page) {
     if(answer.continue) {
       process.stdout.cursorTo(0);
       process.stdout.clearLine();
-      start = page * size.height-1;
-      _.each(content.slice(start, (start + size.height)-2), function(line){
+      start = page * size.height-2;
+      _.each(content.slice(start, (start + size.height-2)), function(line){
         if(line=='END') process.exit();
         process.stdout.write(line+'\n');
       });
-      more(content, page++);
+      more(content, page+1);
     } else {
       process.exit();
     }
