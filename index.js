@@ -75,7 +75,6 @@ function more(content, page) {
       start = page * size.height-2;
       _.each(content.slice(start, (start + size.height-2)), function(line){
         if(line=='END') {
-          console.log('\r\n');
           inquirer.prompt([
             {
               type: 'confirm',
