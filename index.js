@@ -73,8 +73,9 @@ function more(content, page) {
       process.stdout.cursorTo(0);
       process.stdout.clearLine();
       start = page * size.height-2;
-      _.each(content.slice(start, (start + size.height-2)), function(line){
+      _.each(content.slice(start, (start + size.height-2)), function(line, index){
         if(line=='END') {
+          console.log("");
           inquirer.prompt([
             {
               type: 'confirm',
@@ -88,7 +89,8 @@ function more(content, page) {
           });
           end = true;
         } else {
-          process.stdout.write(line+'\n');
+          if(index==0 && line.trim()=='');
+          else process.stdout.write(line+'\n');
         }
       });
       if(!end) more(content, page+1);
@@ -122,6 +124,7 @@ function begin() {
           }
         });
         choices.push(new inquirer.Separator());
+        console.log("");
         inquirer.prompt([
           {
             type      : "list",
